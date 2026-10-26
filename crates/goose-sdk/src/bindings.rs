@@ -1299,6 +1299,22 @@ pub fn typesafe_decision_provider(
     ))
 }
 
+/// Builds a decisions provider for nace.ai Drex models; `base_url` defaults to the nace.ai console.
+#[uniffi::export]
+pub fn nace_decision_provider(
+    api_key: String,
+    base_url: Option<String>,
+) -> Result<Arc<DecisionProvider>, GooseError> {
+    let client = ApiClient::new_with_tls(
+        base_url.unwrap_or_else(|| goose_providers::nace::NACE_DEFAULT_HOST.to_string()),
+        AuthMethod::BearerToken(api_key),
+        None,
+    )?;
+    Ok(decision_provider(goose_providers::nace::NaceProvider::new(
+        client,
+    )))
+}
+
 #[uniffi::export]
 pub fn openrouter_decision_default_model() -> String {
     goose_providers::openrouter::OPENROUTER_DECISION_DEFAULT_MODEL.to_string()
@@ -1307,6 +1323,12 @@ pub fn openrouter_decision_default_model() -> String {
 #[uniffi::export]
 pub fn typesafe_decision_default_model() -> String {
     goose_providers::typesafe::TYPESAFE_DEFAULT_MODEL.to_string()
+}
+
+/// The default nace.ai decisions model, `drex-max`.
+#[uniffi::export]
+pub fn nace_decision_default_model() -> String {
+    goose_providers::nace::NACE_DEFAULT_MODEL.to_string()
 }
 
 #[uniffi::export]

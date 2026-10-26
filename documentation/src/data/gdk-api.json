@@ -166,6 +166,35 @@
           "isAsync": false
         },
         {
+          "name": "nace_decision_default_model",
+          "docs": "The default nace.ai decisions model, `drex-max`.",
+          "params": [],
+          "returns": "String",
+          "throws": null,
+          "isAsync": false
+        },
+        {
+          "name": "nace_decision_provider",
+          "docs": "Builds a decisions provider for nace.ai Drex models; `base_url` defaults to the nace.ai console.",
+          "params": [
+            {
+              "name": "api_key",
+              "type": "String",
+              "default": null,
+              "docs": ""
+            },
+            {
+              "name": "base_url",
+              "type": "Option<String>",
+              "default": null,
+              "docs": ""
+            }
+          ],
+          "returns": "DecisionProvider",
+          "throws": "GooseError",
+          "isAsync": false
+        },
+        {
           "name": "openai_default_model",
           "docs": "",
           "params": [],

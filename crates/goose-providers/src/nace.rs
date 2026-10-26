@@ -37,7 +37,9 @@ impl DecisionProvider for NaceProvider {
         let response = handle_status(response).await?;
         let body: Value = read_json_response(response).await?;
         serde_json::from_value(normalize_response(body)).map_err(|error| {
-            ProviderError::RequestFailed(format!("Response body is not a decision response: {error}"))
+            ProviderError::RequestFailed(format!(
+                "Response body is not a decision response: {error}"
+            ))
         })
     }
 }
